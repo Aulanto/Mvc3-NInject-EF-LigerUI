@@ -1,0 +1,196 @@
+﻿@section headerScripts{
+    <style type="text/css">
+        .l-case-title {
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #winlinks {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            width: 100%;
+        }
+
+            #winlinks ul {
+                position: relative;
+            }
+
+            #winlinks li {
+                width: 70px;
+                cursor: pointer;
+                height: 80px;
+                position: absolute;
+                z-index: 101;
+                list-style: none;
+                text-align: center;
+            }
+
+                #winlinks li img {
+                    width: 36px;
+                    height: 36px;
+                }
+
+                #winlinks li span {
+                    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.3);
+                    border-radius: 10px 10px 10px 10px;
+                    display: block;
+                    font-size: 12px;
+                    margin-top: 1px;
+                    color: White;
+                    line-height: 18px;
+                    text-align: center;
+                }
+
+                #winlinks li.l-over div.bg {
+                    display: block;
+                }
+
+                #winlinks li div.bg {
+                    display: none;
+                    position: absolute;
+                    top: -2px;
+                    left: -2px;
+                    z-index: 0;
+                    width: 75px;
+                    height: 64px;
+                    -webkit-border-radius: 5px;
+                    -moz-border-radius: 5px;
+                    border-radius: 5px;
+                    background: #000;
+                    opacity: 0.1;
+                    filter: alpha(opacity=10);
+                }
+
+        .l-taskbar-task-icon {
+            top: 3px;
+            left: 6px;
+            background-image: none;
+        }
+
+        .l-taskbar-task-content {
+            margin-left: 30px;
+        }
+
+        .l-taskbar-task-icon img {
+            width: 22px;
+            height: 22px;
+        }
+
+        body {
+            overflow: hidden;
+            background: url(Content/LigerUI/images/5.png) repeat center center;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var UrlOrg = '@Url.Action("Index", "Organization")';
+        var UrlMenu = '@Url.Action("Index", "Menu")';
+        var UrlUser = '@Url.Action("Index", "User")';
+        var UrlRole = '@Url.Action("Index", "Role")';
+        var UrlDevice = '';
+        var UrlProgram = '';
+        var UrlLog = '';
+        var UrlSystem = '';
+        var UrlBack = '';
+        var directory = 'Content/LigerUI/skins_1/';
+    </script>
+}
+
+<div id="winlinks">
+    <ul>
+    </ul>
+</div>
+
+@section bottomScripts{
+    <script type="text/javascript">
+        var LINKWIDTH = 90, LINKHEIGHT = 90, TASKBARHEIGHT = 43;
+        var winlinksul = $("#winlinks ul");
+        function winOpen(url, title, icon, width, height) {
+            var win = $.ligerDialog.open(
+            {
+                height: height,
+                url: url,
+                width: width,
+                showMax: false,
+                showToggle: true,
+                showMin: true,
+                isResize: true,
+                modal: false,
+                title: title,
+                slide: true
+            });
+            var task = jQuery.ligerui.win.tasks[win.id];
+            if (task) {
+                $(".l-taskbar-task-icon:first", task).html('<img src="' + icon + '" />');
+            }
+            return win;
+        }
+        var links = [
+                { icon: directory + 'Filezilla.png', title: '组织结构管理', url: UrlOrg, width: 960, height: 600 },
+                { icon: directory + 'Recycle Empty.png', title: '菜单管理', url: UrlMenu, width: 970, height: 600 },
+                { icon: directory + 'Steam.png', title: '用户管理', url: UrlUser, width: 960, height: 600 },
+                { icon: directory + 'Notepad.png', title: '角色管理', url: UrlRole, width: 960, height: 600 },
+                { icon: directory + 'picassa.png', title: '某某管理', url: UrlDevice, width: 960, height: 600 },
+                { icon: directory + 'Recycle Full.png', title: '某某管理1', url: UrlProgram, width: 960, height: 600 },
+                { icon: directory + 'SoulSeek.png', title: '某某管理2', url: UrlLog, width: 960, height: 600 },
+                { icon: directory + 'Task Manager.png', title: '某某管理3', url: UrlBack, width: 960, height: 600 }
+        ];
+
+        function onResize() {
+            var linksHeight = $(window).height() - TASKBARHEIGHT;
+            var winlinks = $("#winlinks");
+            winlinks.height(linksHeight);
+            var colMaxNumber = parseInt(linksHeight / LINKHEIGHT);//一列最多显示几个快捷方式
+            for (var i = 0, l = links.length; i < l; i++) {
+                var link = links[i];
+                var jlink = $("li[linkindex=" + i + "]", winlinks);
+                var top = (i % colMaxNumber) * LINKHEIGHT, left = parseInt(i / colMaxNumber) * LINKWIDTH;
+                if (isNaN(top) || isNaN(left)) continue;
+                jlink.css({ top: top, left: left });
+            }
+
+        }
+        function linksInit() {
+            for (var i = 0, l = links.length; i < l; i++) {
+                var link = links[i];
+                var jlink;
+                var jlink = $("<li></li>");
+                jlink.attr("linkindex", i);
+                jlink.append("<img src='" + link.icon + "' />");
+                jlink.append("<span>" + link.title + "</span>");
+                jlink.append("<div class='bg'></div>");
+                jlink.hover(function () {
+                    $(this).addClass("l-over");
+                }, function () {
+                    $(this).removeClass("l-over");
+                }).click(function () {
+                    var linkindex = $(this).attr("linkindex");
+                    var link = links[linkindex];
+                    winOpen(link.url, link.title, link.icon, link.width, link.height);
+                });
+                jlink.appendTo(winlinksul);
+            }
+
+        }
+
+        $(window).resize(onResize);
+        $.ligerui.win.removeTaskbar = function () { }; //不允许移除
+        $.ligerui.win.createTaskbar(); //页面加载时创建任务栏
+
+        linksInit();
+        onResize();
+
+    </script>
+}

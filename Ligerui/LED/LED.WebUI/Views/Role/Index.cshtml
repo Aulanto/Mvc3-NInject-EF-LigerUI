@@ -1,0 +1,367 @@
+﻿@section headerScripts{
+    <style type="text/css">
+        #grid {
+            margin: 5px 10px 0 10px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var UrlRoleDataSource = '@Url.Action("RoleDataSource")';
+        var UrlRoleDetail = '@Url.Action("RoleDetail")';
+        var UrlAddRole = '@Url.Action("AddRole")';
+        var UrlModifyRole = '@Url.Action("ModifyRole")';
+        var UrlDeleteRole = '@Url.Action("DeleteRole")';
+        var UrlMenuDataSource = '@Url.Action("MenuDataSource")';
+        var UrlAttachRoleToMenu = '@Url.Action("AttachRoleToMenu")';
+        var UrlGetMenuByRoleId = '@Url.Action("GetMenuByRoleId")';
+        var UrlDeleteUserFromRole = '@Url.Action("DeleteUserFromRole")';
+
+
+        var detailGrid;
+        var menugrid;
+        var rids = [];
+
+        var DeleteUser;
+
+        $(function () {
+            InitLayOut();
+            InitGrid();
+            InitMenuGrid();
+        });
+
+        function InitLayOut() {
+            $("#layout").ligerLayout({
+                rightWidth: 452,
+                height: '100%',
+                heightDiff: 14,
+                space: 4,
+                allowRightCollapse: false
+            });
+        }
+
+
+        function InitGrid() {
+            $("#grid").ligerGrid({
+                columns: [
+                { display: '角色ID', name: 'roleid', align: 'center', width: '48%' },
+                { display: '角色名称', name: 'rolename', align: 'center', width: '48%' }
+                ],
+                width: '98%',
+                pageSizeOptions: [10, 30, 50],
+                height: '98%',
+                detailHeight: 'auto',
+                rowHeight: '30',
+                headerRowHeight: '33',
+                url: UrlRoleDataSource,
+                alternatingRow: true,
+                onSelectRow: selectedRow,
+                toolbar: {
+                    items: [
+                   { text: '增加', click: AddRole, img: '@Url.Content("~/Content/LigerUI/icons/add.gif")' },
+                   { line: true },
+                   { text: '修改', click: ModifyRole, img: '@Url.Content("~/Content/LigerUI/icons/modify.gif")' },
+                   { line: true },
+                   { text: '删除', click: DeleteRole, img: '@Url.Content("~/Content/LigerUI/icons/delete.gif")' }
+                    ]
+                },
+              detail: { onShowDetail: DetailInit }
+          }
+            );
+
+
+           function selectedRow() {
+               var grid = $("#grid").ligerGrid();
+               var row = grid.getSelectedRow();
+               $.get(UrlGetMenuByRoleId, { roleId: row.roleid }, function (data) {
+                   rids = data;
+                   menugrid.reload();
+               });
+           }
+
+           function DetailInit(row, detailPanel, callback) {
+               var grid = document.createElement('div');
+               $(detailPanel).append(grid);
+               detailGrid = $(grid).css('margin', 10).ligerGrid({
+                   columns: [
+                               { display: '账号', name: 'userid' },
+                               { display: '姓名', name: 'name' },
+                               { display: '所属角色ID', name: 'roleid', hide: 'hide', width: 10 },
+                               {
+                                   display: '操作', isSort: false, width: 120, render: function (rowdata, rowindex, value) {
+
+                                       return "<a style=\"color:black;\" href='javascript:DeleteUser(\"" + rowdata.userid + "\",\"" + rowdata.roleid + "\")'>删除</a>";
+                                   }
+                               }
+                   ],
+                   isScroll: true,
+                   showToggleColBtn: false,
+                   width: '95%',
+                   url: UrlRoleDetail,
+                   parms: { roleId: row.roleid },
+                   showTitle: false,
+                   columnWidth: 250,
+                   rowHeight: '30',
+                   headerRowHeight: '33',
+                   onAfterShowData: callback,
+                   frozen: false
+               });
+           }
+           function AddRole() {
+
+               if (!window.addWin) {
+                   window.addWin = $.ligerDialog.open({
+                       target: $("#winAdd"),
+                       height: 260,
+                       width: 400,
+                       title: "增加角色",
+                       isHidden: false
+                   });
+
+                   $("#btnCancel").click(function () {
+                       window.addWin.hide();
+                   });
+
+                   $("#btnConfirm").click(function () {
+
+                       var roleId = $("#txtRoleId").val();
+                       var roleName = $("#txtRoleName").val();
+
+                       if (roleId == "" || roleName == "") {
+                           alert("角色ID和名称不能为空！");
+                           return;
+                       }
+
+                       $.post(UrlAddRole,
+                           { roleId: roleId, roleName: roleName },
+                           function (data) {
+                               if (data.result) {
+                                   alert("操作成功！");
+                                   $("#grid").ligerGrid().reload();
+                               } else {
+                                   alert(data.msg);
+                               }
+                           });
+                   });
+               } else {
+                   window.addWin.show();
+               }
+           }
+           function ModifyRole() {
+               var grid = $("#grid").ligerGrid();
+               var row = grid.getSelectedRow();
+               if (row == null) {
+                   alert("请选择一条数据");
+                   return;
+               }
+               $("#winModify").data("roleid", row.roleid);
+               $("#winModify").data("rolename", row.rolename);
+
+               if (!window.modifyWin) {
+                   window.modifyWin = $.ligerDialog.open({
+                       target: $("#winModify"),
+                       height: 250,
+                       width: 400,
+                       title: "修改角色"
+                   });
+
+                   $("#txtModifyRoleId").val($("#winModify").data("roleid"));
+                   $("#txtModifyRoleName").val($("#winModify").data("rolename"));
+
+                   $("#btnModifyCancel").click(function () {
+                       window.modifyWin.hide();
+                   });
+
+                   $("#btnModifyConfirm").click(function () {
+
+                       var roleId = $("#txtModifyRoleId").val();
+                       var roleName = $("#txtModifyRoleName").val();
+
+                       if (roleName == "") {
+                           alert("角色名称不能为空！");
+                           return;
+                       }
+
+                       $.post(UrlModifyRole, { roleId: roleId, roleName: roleName }, function (data) {
+                           if (data.result) {
+                               alert("操作成功！");
+                               $("#grid").ligerGrid().reload();
+                           } else {
+                               alert(data.msg);
+                           }
+                       });
+                   });
+               } else {
+                   $("#txtModifyRoleId").val($("#winModify").data("roleid"));
+                   $("#txtModifyRoleName").val($("#winModify").data("rolename"));
+                   window.modifyWin.show();
+               }
+           }
+           function DeleteRole() {
+               var grid = $("#grid").ligerGrid();
+               var row = grid.getSelectedRow();
+               if (row == null) {
+                   alert("请选择一条数据");
+                   return;
+               }
+               if (confirm("是否确定删除？")) {
+                   $.post(UrlDeleteRole, { roleId: row.roleid }, function (data) {
+                       if (data.result) {
+                           alert("删除成功！");
+                           $("#grid").ligerGrid().reload();
+                       } else {
+                           alert(data.msg);
+                       }
+                   });
+               }
+           }
+
+           DeleteUser = function (userid,roleid) {
+             
+               if (confirm("是否确定删除？")) {
+                   $.post(UrlDeleteUserFromRole, { userId: userid, roleId: roleid }, function (data) {
+                       if (data.result) {
+                           alert("删除成功！");
+                           detailGrid.reload();
+                       } else {
+                           alert(data.msg);
+                       }
+                   });
+               }
+           }
+       }
+
+       function InitMenuGrid() {
+           menugrid = $("#menugrid").ligerGrid({
+               columns: [
+               { display: '页面名称', name: 'name', align: 'center', width: '90%' },
+               { display: '页面名称', name: 'rid', align: 'center', width: '2%', hide: 'hide' }
+               ],
+               width: '98%',
+               pageSizeOptions: [10, 30, 50],
+               height: '98%',
+               rowHeight: '30',
+               headerRowHeight: '33',
+               url: UrlMenuDataSource,
+               alternatingRow: true,
+               checkbox: true,
+               isChecked: function (rowdata) {
+                   if (rids.length == 0) {
+                       return false;
+                   }
+                   else {
+                       var temp = 0;
+                       for (var i = 0; i < rids.length; i++) {
+                           if (rowdata.rid == rids[i]) {
+                               break;
+                           }
+                           temp++;
+                       }
+                       if (temp == rids.length) {
+                           return false;
+                       } else {
+                           return true;
+                       }
+                   }
+               },
+               toolbar: {
+                   items: [
+                  { text: '保存', click: Save, img: '@Url.Content("~/Content/LigerUI/icons/ok.gif")' },
+                   { line: true },
+                   ]
+               }
+           });
+
+           function Save() {
+               if (confirm("是否确定保存？")) {
+                   var grid = $("#grid").ligerGrid();
+                   var row = grid.getSelectedRow();
+                   if (row == null) {
+                       alert("请选择角色");
+                       return;
+                   }
+                   var temp = menugrid;
+                   var menurows = menugrid.getSelectedRows();
+                   if (menurows.length == 0) {
+                       alert("请选择页面");
+                       return;
+                   }
+                   var menus = [];
+                   for (var i = 0; i < menurows.length; i++) {
+                       menus.push(menurows[i].rid);
+                   }
+                   var params = { roleId: row.roleid, menus: menus };
+
+                   $.ajax({
+                       type: "POST",
+                       url: UrlAttachRoleToMenu,
+                       data: params,
+                       success: function (data) {
+                           if (data.result) {
+                               alert("操作成功！");
+                           } else {
+                               alert(data.msg);
+                           }
+                       },
+                       dataType: "json",
+                       traditional: true
+                   });
+               }
+
+           }
+       }
+    </script>
+}
+
+<div id="layout">
+    <div position="center" title="角色列表">
+        <div id="grid"></div>
+    </div>
+    <div position="right" title="页面列表">
+        <div id="menugrid"></div>
+    </div>
+</div>
+
+
+
+
+<div id="winAdd" style="display: none;">
+    <table class="tb" style="height: 170px;">
+        <tr class="tr">
+            <td class="td">角色ID：</td>
+            <td>
+                <input id="txtRoleId" /></td>
+        </tr>
+        <tr class="tr">
+            <td class="td">角色名称：</td>
+            <td>
+                <input id="txtRoleName" type="text" /></td>
+        </tr>
+        <tr class="tr">
+            <td colspan="2">
+                <button id="btnConfirm" class="ui-button">确定</button>
+                <button id="btnCancel" class="ui-button">取消</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="winModify" style="display: none;">
+    <table class="tb" style="height: 170px;">
+        <tr class="tr">
+            <td class="td">角色ID：</td>
+            <td>
+                <input id="txtModifyRoleId" readonly="true" /></td>
+        </tr>
+        <tr class="tr">
+            <td class="td">角色名称：</td>
+            <td>
+                <input id="txtModifyRoleName" type="text" /></td>
+        </tr>
+        <tr class="tr">
+            <td colspan="2">
+                <button id="btnModifyConfirm" class="ui-button">确定</button>
+                <button id="btnModifyCancel" class="ui-button">取消</button>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,31 @@
+D:\documents\visual studio 2012\Projects\LED\LED.DataProvider\bin\Debug\LED.DataProvider.dll
+D:\documents\visual studio 2012\Projects\LED\LED.DataProvider\bin\Debug\LED.DataProvider.pdb
+D:\documents\visual studio 2012\Projects\LED\LED.DataProvider\obj\Debug\LED.DataProvider.csprojResolveAssemblyReference.cache
+D:\documents\visual studio 2012\Projects\LED\LED.DataProvider\obj\Debug\LED.DataProvider.dll
+D:\documents\visual studio 2012\Projects\LED\LED.DataProvider\obj\Debug\LED.DataProvider.pdb
+D:\documents\visual studio 2012\Projects\LED\LED.DataProvider\bin\Debug\LED.Domain.dll
+D:\documents\visual studio 2012\Projects\LED\LED.DataProvider\bin\Debug\LED.Domain.pdb
+F:\SourceCode\LED\LED.DataProvider\bin\Debug\LED.DataProvider.dll
+F:\SourceCode\LED\LED.DataProvider\bin\Debug\LED.DataProvider.pdb
+F:\SourceCode\LED\LED.DataProvider\bin\Debug\LED.Domain.dll
+F:\SourceCode\LED\LED.DataProvider\bin\Debug\LED.Domain.pdb
+F:\SourceCode\LED\LED.DataProvider\obj\Debug\LED.DataProvider.csprojResolveAssemblyReference.cache
+F:\SourceCode\LED\LED.DataProvider\obj\Debug\LED.DataProvider.dll
+F:\SourceCode\LED\LED.DataProvider\obj\Debug\LED.DataProvider.pdb
+F:\SourceCode\led-message-system\server\LED\LED.DataProvider\bin\Debug\LED.DataProvider.dll.config
+F:\SourceCode\led-message-system\server\LED\LED.DataProvider\bin\Debug\LED.DataProvider.dll
+F:\SourceCode\led-message-system\server\LED\LED.DataProvider\bin\Debug\LED.DataProvider.pdb
+F:\SourceCode\led-message-system\server\LED\LED.DataProvider\bin\Debug\EntityFramework.dll
+F:\SourceCode\led-message-system\server\LED\LED.DataProvider\bin\Debug\EntityFramework.SqlServer.dll
+F:\SourceCode\led-message-system\server\LED\LED.DataProvider\bin\Debug\LED.Domain.dll
+F:\SourceCode\led-message-system\server\LED\LED.DataProvider\bin\Debug\LED.Domain.pdb
+F:\SourceCode\led-message-system\server\LED\LED.DataProvider\bin\Debug\EntityFramework.xml
+F:\SourceCode\led-message-system\server\LED\LED.DataProvider\bin\Debug\EntityFramework.SqlServer.xml
+F:\SourceCode\led-message-system\server\LED\LED.DataProvider\obj\Debug\LED.DataProvider.csprojResolveAssemblyReference.cache
+F:\SourceCode\led-message-system\server\LED\LED.DataProvider\obj\Debug\LED.DataProvider.dll
+F:\SourceCode\led-message-system\server\LED\LED.DataProvider\obj\Debug\LED.DataProvider.pdb
+F:\SourceCode\LED\LED.DataProvider\bin\Debug\LED.DataProvider.dll.config
+F:\SourceCode\LED\LED.DataProvider\bin\Debug\EntityFramework.dll
+F:\SourceCode\LED\LED.DataProvider\bin\Debug\EntityFramework.SqlServer.dll
+F:\SourceCode\LED\LED.DataProvider\bin\Debug\EntityFramework.xml
+F:\SourceCode\LED\LED.DataProvider\bin\Debug\EntityFramework.SqlServer.xml

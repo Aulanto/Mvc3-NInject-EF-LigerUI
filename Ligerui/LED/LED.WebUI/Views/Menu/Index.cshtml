@@ -1,0 +1,263 @@
+﻿@section headerScripts{
+    <style type="text/css">
+        #grid {
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        var UrlMenuDataSource = '@Url.Action("MenuDataSource")';
+        var UrlParentNode = '@Url.Action("ParentNode")';
+        var UrlAddMenu = '@Url.Action("AddMenu")';
+        var UrlModifyMenu = '@Url.Action("ModifyMenu")';
+        var UrlDeleteMenu = '@Url.Action("DeleteMenu")';
+
+        $(function () {
+            $("#grid").ligerGrid({
+                columns: [
+                { display: '页面名称', name: 'name', id: 'tree1', align: 'left', width: '30%' },
+                { display: '排列序号', name: 'tindex', type: 'int', align: 'left', width: '30%' },
+                { display: '访问地址', name: 'url', align: 'left', width: '30%' },
+                { display: '页面ID', name: 'rid', hide: 'hide', width: '1%' },
+                { display: '页面父ID', name: 'parentrid', hide: 'hide', width: '1%' }
+                ],
+                width: '98%',
+                pageSizeOptions: [10, 30, 50],
+                height: '100%',
+                rowHeight: 30,
+                headerRowHeight: 30,
+                url: UrlMenuDataSource,
+                alternatingRow: true,
+                tree: { columnId: 'tree1' },
+                dataAction: 'local',
+                toolbar: {
+                    items: [
+                   { text: '增加', click: AddMenu, img: '@Url.Content("~/Content/LigerUI/icons/add.gif")' },
+                   { line: true },
+                   { text: '修改', click: ModifyMenu, img: '@Url.Content("~/Content/LigerUI/icons/modify.gif")' },
+                   { line: true },
+                   { text: '删除', click: DeleteMenu, img: '@Url.Content("~/Content/LigerUI/icons/delete.gif")' }
+                    ]
+                }
+            }
+            );
+
+            //添加
+            function AddMenu() {
+              
+                if (!window.addWin) {
+                    window.addWin = $.ligerDialog.open({
+                        target: $("#winAdd"),
+                        height: 260,
+                        width: 400,
+                        title: "增加菜单",
+                        isHidden: false
+                    });
+                    $("#txtParentNode").ligerComboBox(
+                       {
+                           url: UrlParentNode,
+                           valueField: 'rid',
+                           textField: 'name',
+                           selectBoxWidth: 135,
+                           autocomplete: true,
+                           width: 135,
+                           hideOnLoseFocus: true,
+                           css: 'combo'
+                       }
+
+                   );
+
+                    $("#btnCancel").click(function () {
+                        window.addWin.hide();
+                    });
+
+                    $("#btnConfirm").click(function () {
+
+                        var parentNode = $("#txtParentNode").ligerComboBox().getValue();
+                        var pageName = $("#txtPageName").val();
+                        var url = $("#txtUrl").val();
+                        var index = $("#txtTIndex").val();
+
+                        if (pageName == "" || url == "") {
+                            alert("页面名称和访问地址不能为空！");
+                            return;
+                        }
+
+                        $.post(UrlAddMenu,
+                            { parentNode: parentNode, pageName: pageName, url: url, index: index },
+                            function (data) {
+                                if (data.result) {
+                                    alert("操作成功！");
+                                    $("#grid").ligerGrid().reload();
+                                } else {
+                                    alert(data.msg);
+                                }
+                            });
+                    });
+                } else {
+                    window.addWin.show();
+                }
+
+            }
+            //修改
+            function ModifyMenu() {
+                var ModifyDialog;
+                var grid = $("#grid").ligerGrid();
+                var row = grid.getSelectedRow();
+                if (row == null) {
+                    alert("请选择一条数据");
+                    return;
+                }
+                $("#winModify").data("name",row.name);
+                $("#winModify").data("tindex",row.tindex);
+                $("#winModify").data("url", row.url);
+                $("#winModify").data("rid", row.rid);
+                $("#winModify").data("parentrid", row.parentrid);
+
+
+                if (!window.modifyWin) {
+                    window.modifyWin = $.ligerDialog.open({
+                        target: $("#winModify"),
+                        height: 250,
+                        width: 400,
+                        title: "修改菜单"
+                    });
+                   
+                    $("#txtModifyPageName").val( $("#winModify").data("name"));
+                    $("#txtIndex").val( $("#winModify").data("tindex"));
+                    $("#txtModifyUrl").val($("#winModify").data("url"));
+                    $("#txtRid").val($("#winModify").data("rid"));
+                    $("#txtParentRid").val( $("#winModify").data("parentrid"));
+
+                    $("#btnModifyCancel").click(function () {
+                        window.modifyWin.hide();
+                    });
+
+                    $("#btnModifyConfirm").click(function () {
+
+                        var pageName = $("#txtModifyPageName").val();
+                        var index = $("#txtIndex").val();
+                        var url = $("#txtModifyUrl").val();
+                        var rid = $("#txtRid").val();
+                        var parentrid = $("#txtParentRid").val();
+
+                        if (pageName == "" || url == "") {
+                            alert("页面名称和访问地址不能为空");
+                            return;
+                        }
+
+                        $.post(UrlModifyMenu, { pageName: pageName, index: index, url: url, rid: rid, parentrid: parentrid }, function (data) {
+                            if (data.result) {
+                                alert("操作成功！");
+                                $("#grid").ligerGrid().reload();
+                            } else {
+                                alert(data.msg);
+                            }
+                        });
+                    });
+                } else {
+                    $("#txtModifyPageName").val($("#winModify").data("name"));
+                    $("#txtIndex").val($("#winModify").data("tindex"));
+                    $("#txtModifyUrl").val($("#winModify").data("url"));
+                    $("#txtRid").val($("#winModify").data("rid"));
+                    $("#txtParentRid").val($("#winModify").data("parentrid"));
+                    window.modifyWin.show();
+                }
+
+            }
+            //删除
+            function DeleteMenu() {
+                var grid = $("#grid").ligerGrid();
+                var row = grid.getSelectedRow();
+                if (row == null) {
+                    alert("请选择一条数据");
+                    return;
+                }
+                if (confirm("是否确定删除？")) {
+                    $.post(UrlDeleteMenu, { rid: row.rid }, function (data) {
+                        if (data.result) {
+                            alert("删除成功！");
+                            $("#grid").ligerGrid().reload();
+                        } else {
+                            alert(data.msg);
+                        }
+                    });
+                }
+
+            }
+        });
+    </script>
+}
+
+<div id="grid"></div>
+
+<div id="winAdd" style="display: none;">
+    <table class="tb" style="height: 170px;">
+        <tr class="tr">
+            <td class="td">父级：</td>
+            <td>
+                <input id="txtParentNode" /></td>
+        </tr>
+        <tr class="tr">
+            <td class="td">页面名称：</td>
+            <td>
+                <input id="txtPageName" type="text" /></td>
+        </tr>
+        <tr class="tr">
+            <td class="td">访问地址:
+            </td>
+            <td>
+                <input id="txtUrl" type="text" />
+            </td>
+
+        </tr>
+        <tr class="tr">
+            <td class="td">排列序号:
+            </td>
+            <td>
+                <input id="txtTIndex" type="text" />
+            </td>
+
+        </tr>
+        <tr class="tr">
+            <td colspan="2">
+                <button id="btnConfirm" class="ui-button">确定</button>
+                <button id="btnCancel" class="ui-button">取消</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="winModify" style="display: none;">
+    <table class="tb" style="height: 170px;">
+        <tr class="tr">
+            <td class="td">页面名称：</td>
+            <td>
+                <input id="txtModifyPageName" type="text" /></td>
+        </tr>
+        <tr class="tr">
+            <td class="td">排列序号：</td>
+            <td>
+                <input id="txtIndex" /></td>
+        </tr>
+        <tr class="tr">
+            <td class="td">访问地址:
+            </td>
+            <td>
+                <input id="txtModifyUrl" type="text" />
+                <input id="txtRid" type="hidden" />
+                 <input id="txtParentRid" type="hidden" />
+            </td>
+
+        </tr>
+        <tr class="tr">
+            <td colspan="2">
+                <button id="btnModifyConfirm" class="ui-button">确定</button>
+                <button id="btnModifyCancel" class="ui-button">取消</button>
+            </td>
+        </tr>
+    </table>
+</div>
+

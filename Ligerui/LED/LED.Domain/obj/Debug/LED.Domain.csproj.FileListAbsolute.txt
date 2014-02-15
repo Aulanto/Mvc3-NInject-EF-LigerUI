@@ -1,0 +1,15 @@
+D:\documents\visual studio 2012\Projects\LED\LED.Domain\bin\Debug\LED.Domain.dll
+D:\documents\visual studio 2012\Projects\LED\LED.Domain\bin\Debug\LED.Domain.pdb
+D:\documents\visual studio 2012\Projects\LED\LED.Domain\obj\Debug\LED.Domain.dll
+D:\documents\visual studio 2012\Projects\LED\LED.Domain\obj\Debug\LED.Domain.pdb
+D:\documents\visual studio 2012\Projects\LED\LED.Domain\obj\Debug\LED.Domain.csprojResolveAssemblyReference.cache
+F:\SourceCode\LED\LED.Domain\bin\Debug\LED.Domain.dll
+F:\SourceCode\LED\LED.Domain\bin\Debug\LED.Domain.pdb
+F:\SourceCode\LED\LED.Domain\obj\Debug\LED.Domain.csprojResolveAssemblyReference.cache
+F:\SourceCode\LED\LED.Domain\obj\Debug\LED.Domain.dll
+F:\SourceCode\LED\LED.Domain\obj\Debug\LED.Domain.pdb
+F:\SourceCode\led-message-system\server\LED\LED.Domain\bin\Debug\LED.Domain.dll
+F:\SourceCode\led-message-system\server\LED\LED.Domain\bin\Debug\LED.Domain.pdb
+F:\SourceCode\led-message-system\server\LED\LED.Domain\obj\Debug\LED.Domain.dll
+F:\SourceCode\led-message-system\server\LED\LED.Domain\obj\Debug\LED.Domain.pdb
+F:\SourceCode\led-message-system\server\LED\LED.Domain\obj\Debug\LED.Domain.csprojResolveAssemblyReference.cache

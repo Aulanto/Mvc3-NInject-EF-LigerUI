@@ -1,0 +1,562 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{99ED5A00-6974-46F6-84B9-2D8DA76CCB2A}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LED.WebUI</RootNamespace>
+    <AssemblyName>LED.WebUI</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.3.0.20105.1\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Providers">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.1.1\lib\net40\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.1.0.20105.408\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Areas\SystemManagement\SystemManagementAreaRegistration.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\OrganizationController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\CurrentUser.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\ligerHook.css" />
+    <Content Include="Content\LigerUI\Aqua\css\ligerui-all.css" />
+    <Content Include="Content\LigerUI\Aqua\css\ligerui-common.css" />
+    <Content Include="Content\LigerUI\Aqua\css\ligerui-dialog.css" />
+    <Content Include="Content\LigerUI\Aqua\css\ligerui-form.css" />
+    <Content Include="Content\LigerUI\Aqua\css\ligerui-grid.css" />
+    <Content Include="Content\LigerUI\Aqua\css\ligerui-layout.css" />
+    <Content Include="Content\LigerUI\Aqua\css\ligerui-menu.css" />
+    <Content Include="Content\LigerUI\Aqua\css\ligerui-tab.css" />
+    <Content Include="Content\LigerUI\Aqua\css\ligerui-tree.css" />
+    <Content Include="Content\LigerUI\Aqua\images\common\bigloading.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\common\button-disabled.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\common\button-over.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\common\button.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\common\drop-icons.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\common\exclamation.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\common\invalid-line.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\common\loading.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\common\table.png" />
+    <Content Include="Content\LigerUI\Aqua\images\common\toggle.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\bg-panel-title-over.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\bg-panel-title-pressed.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\bg-panel-title.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\bg-tab-title-over.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\bg-tab-title-pressed.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\bg-tab-title.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\bg-text.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\bg-trigger-over.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\bg-trigger-pressed.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\bg-trigger.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\btn-l.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\btn-r.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\btn.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\button-bg-over.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\button-bg.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\checkbox.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\dateeditor-bar-bg.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\dateeditor-header-bg.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\controls\radio.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\dateeditor\date.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\dateeditor\icon-first.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\dateeditor\icon-last.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\dateeditor\icon-next.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\dateeditor\icon-prev.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\form\verify-corner.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\grid\grid-checkbox-checked.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\grid\grid-checkbox.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\grid\grid-detail-close.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\grid\grid-detail-open.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\grid\grid-tree-close.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\grid\grid-tree-open.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\grid\header-bg-over.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\grid\header-bg.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\grid\header2-bg.jpg" />
+    <Content Include="Content\LigerUI\Aqua\images\grid\popup-line.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\grid\popup-row-over.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\bar-button-over.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\checkbox-checked.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\checkbox.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\cross.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-close-over.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-close.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-down.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-drop.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-edited.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-first.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-last.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-line.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-load.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-next.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-prev.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-select.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-sort-asc.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-sort-desc.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-unselect.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\icon\icon-up.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\accordion-content.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\accordion-header-over.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\accordion-header.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\layout-header-over.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\layout-header.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\layout-sidebar-header.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\mini-bottom.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\mini-left.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\mini-right.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\mini-top.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\panel-content.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\panel-header-over.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\panel-header.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\tabs-bg.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\tabs-item-bg.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\tabs-item-left-bg.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\tabs-item-over-bg.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\tabs-item-right-bg.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\tabs-tools.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\layout\togglebar.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\menu\menu-item-arrow.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\menu\menu-item-down.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\menu\menu-item-over-l.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\menu\menu-item-over-m.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\menu\menu-item-over-r.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\menu\menu-line-x.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\menu\menu-line-y.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\panel\bar-bg.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\panel\header-bg.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\panel\header-bg.jpg" />
+    <Content Include="Content\LigerUI\Aqua\images\panel\header2-bg.jpg" />
+    <Content Include="Content\LigerUI\Aqua\images\panel\panel-btn-l.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\panel\panel-btn-r.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\panel\panel-btn.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\panel\panel-header.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\panel\panel-menu-item-down.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\panel\panel-menu.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\panel\panel-toolbar.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\panel\panel-tools.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\tree\folder-open.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\tree\folder.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\tree\loading.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\tree\tree-leaf.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\tree\tree-level.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\tree\tree-noline.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\tree\tree-status-close.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\tree\tree-status-open.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\tree\tree-status.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\tree\tree.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\win\box-icons.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\win\box.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\win\dialog-bc.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\win\dialog-icons.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\win\dialog-tc.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\win\dialog-winbtns.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\win\dialog.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\win\taskbar-task.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\win\taskbar.gif" />
+    <Content Include="Content\LigerUI\Aqua\images\win\taskbar.png" />
+    <Content Include="Content\LigerUI\Aqua\images\win\taskicon.gif" />
+    <Content Include="Content\LigerUI\Gray\css\all.css" />
+    <Content Include="Content\LigerUI\Gray\css\common.css" />
+    <Content Include="Content\LigerUI\Gray\css\dialog.css" />
+    <Content Include="Content\LigerUI\Gray\css\form.css" />
+    <Content Include="Content\LigerUI\Gray\css\grid.css" />
+    <Content Include="Content\LigerUI\Gray\css\layout.css" />
+    <Content Include="Content\LigerUI\Gray\css\tab.css" />
+    <Content Include="Content\LigerUI\Gray\images\layout\accordion-header.gif" />
+    <Content Include="Content\LigerUI\Gray\images\layout\icon-close-over.gif" />
+    <Content Include="Content\LigerUI\Gray\images\layout\icon-close.gif" />
+    <Content Include="Content\LigerUI\Gray\images\layout\layout-header.gif" />
+    <Content Include="Content\LigerUI\Gray\images\layout\tabs-bg.gif" />
+    <Content Include="Content\LigerUI\Gray\images\layout\tabs-item-bg.gif" />
+    <Content Include="Content\LigerUI\Gray\images\layout\tabs-item-left-bg.gif" />
+    <Content Include="Content\LigerUI\Gray\images\layout\tabs-item-left-selected.gif" />
+    <Content Include="Content\LigerUI\Gray\images\layout\tabs-item-right-bg.gif" />
+    <Content Include="Content\LigerUI\Gray\images\layout\tabs-item-right-selected.gif" />
+    <Content Include="Content\LigerUI\Gray\images\layout\tabs-item-selected.gif" />
+    <Content Include="Content\LigerUI\Gray\images\layout\togglebar.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\btn.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\button-disabled.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\button-over.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\button.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\button1.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\button2.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\dateeditor-bar.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\dateeditor-btn-over.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\dateeditor-btn.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\dateeditor-thead.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\grid-detail-close.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\grid-detail-open.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\gridalt.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\gridbar.jpg" />
+    <Content Include="Content\LigerUI\Gray\images\ui\grideditor.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\icon-down.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\icon-select.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\icon-unselect.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\icon-up.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\input.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\inputdisabled.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\loading.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\loading2.gif" />
+    <Content Include="Content\LigerUI\Gray\images\ui\trigger.gif" />
+    <Content Include="Content\LigerUI\Gray\images\win\dialog-winbtns.gif" />
+    <Content Include="Content\LigerUI\Gray\images\win\dialogbtn.gif" />
+    <Content Include="Content\LigerUI\Gray\images\win\dialogicon.gif" />
+    <Content Include="Content\LigerUI\icons\add.gif" />
+    <Content Include="Content\LigerUI\icons\archives.gif" />
+    <Content Include="Content\LigerUI\icons\attibutes.gif" />
+    <Content Include="Content\LigerUI\icons\back.gif" />
+    <Content Include="Content\LigerUI\icons\bluebook.gif" />
+    <Content Include="Content\LigerUI\icons\bookpen.gif" />
+    <Content Include="Content\LigerUI\icons\busy.gif" />
+    <Content Include="Content\LigerUI\icons\calendar.gif" />
+    <Content Include="Content\LigerUI\icons\candle.gif" />
+    <Content Include="Content\LigerUI\icons\coffee.gif" />
+    <Content Include="Content\LigerUI\icons\comment.gif" />
+    <Content Include="Content\LigerUI\icons\communication.gif" />
+    <Content Include="Content\LigerUI\icons\config.gif" />
+    <Content Include="Content\LigerUI\icons\customers.gif" />
+    <Content Include="Content\LigerUI\icons\cut.gif" />
+    <Content Include="Content\LigerUI\icons\database.gif" />
+    <Content Include="Content\LigerUI\icons\delete.gif" />
+    <Content Include="Content\LigerUI\icons\discuss.gif" />
+    <Content Include="Content\LigerUI\icons\down.gif" />
+    <Content Include="Content\LigerUI\icons\edit.gif" />
+    <Content Include="Content\LigerUI\icons\graywarn.gif" />
+    <Content Include="Content\LigerUI\icons\greenwarn.gif" />
+    <Content Include="Content\LigerUI\icons\help.gif" />
+    <Content Include="Content\LigerUI\icons\home.gif" />
+    <Content Include="Content\LigerUI\icons\lock.gif" />
+    <Content Include="Content\LigerUI\icons\logout.gif" />
+    <Content Include="Content\LigerUI\icons\mailbox.gif" />
+    <Content Include="Content\LigerUI\icons\memeber.gif" />
+    <Content Include="Content\LigerUI\icons\modify.gif" />
+    <Content Include="Content\LigerUI\icons\msn.gif" />
+    <Content Include="Content\LigerUI\icons\myaccount.gif" />
+    <Content Include="Content\LigerUI\icons\ok.gif" />
+    <Content Include="Content\LigerUI\icons\outbox.gif" />
+    <Content Include="Content\LigerUI\icons\pager.gif" />
+    <Content Include="Content\LigerUI\icons\photograph.gif" />
+    <Content Include="Content\LigerUI\icons\plus.gif" />
+    <Content Include="Content\LigerUI\icons\prev.gif" />
+    <Content Include="Content\LigerUI\icons\print.gif" />
+    <Content Include="Content\LigerUI\icons\process.gif" />
+    <Content Include="Content\LigerUI\icons\qq.gif" />
+    <Content Include="Content\LigerUI\icons\refresh.gif" />
+    <Content Include="Content\LigerUI\icons\right.gif" />
+    <Content Include="Content\LigerUI\icons\role.gif" />
+    <Content Include="Content\LigerUI\icons\save-disabled.gif" />
+    <Content Include="Content\LigerUI\icons\save.gif" />
+    <Content Include="Content\LigerUI\icons\search.gif" />
+    <Content Include="Content\LigerUI\icons\search2.gif" />
+    <Content Include="Content\LigerUI\icons\settings.gif" />
+    <Content Include="Content\LigerUI\icons\true.gif" />
+    <Content Include="Content\LigerUI\icons\up.gif" />
+    <Content Include="Content\LigerUI\images\3DSMAX.png" />
+    <Content Include="Content\LigerUI\images\5.png" />
+    <Content Include="Content\LigerUI\images\Alien Folder.png" />
+    <Content Include="Content\LigerUI\images\applebg.jpg" />
+    <Content Include="Content\LigerUI\images\layout-header.gif" />
+    <Content Include="Content\LigerUI\images\loading.gif" />
+    <Content Include="Content\LigerUI\images\logo.jpg" />
+    <Content Include="Content\LigerUI\images\Program Files Folder.png" />
+    <Content Include="Content\LigerUI\images\top.jpg" />
+    <Content Include="Content\LigerUI\images\topicon.gif" />
+    <Content Include="Content\LigerUI\images\Xp-G5 006.png" />
+    <Content Include="Content\LigerUI\ligerui-icons.css" />
+    <Content Include="Content\LigerUI\login\login-btn.gif" />
+    <Content Include="Content\LigerUI\login\logo.jpg" />
+    <Content Include="Content\LigerUI\login\panel-c.gif" />
+    <Content Include="Content\LigerUI\login\panel-f.gif" />
+    <Content Include="Content\LigerUI\login\panel-h.gif" />
+    <Content Include="Content\LigerUI\Silvery\css\form.css" />
+    <Content Include="Content\LigerUI\Silvery\css\grid.css" />
+    <Content Include="Content\LigerUI\Silvery\css\layout.css" />
+    <Content Include="Content\LigerUI\Silvery\css\style.css" />
+    <Content Include="Content\LigerUI\Silvery\images\form\checkboxradio.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\icon-down-over.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\icon-down.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\icon-up-over.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\icon-up.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\invalid_line.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\text-date-icon.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\text-down-icon.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\text-focus.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\text-l-focus.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\text-l-over.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\text-l.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\text-over.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\text-r-focus.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\text-r-over.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\text-r.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\form\text.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\grid\gridheaderbg.jpg" />
+    <Content Include="Content\LigerUI\Silvery\images\layout\accordion-header-over.jpg" />
+    <Content Include="Content\LigerUI\Silvery\images\layout\accordion-header.jpg" />
+    <Content Include="Content\LigerUI\Silvery\images\layout\layout-header-over.jpg" />
+    <Content Include="Content\LigerUI\Silvery\images\layout\layout-header.jpg" />
+    <Content Include="Content\LigerUI\Silvery\images\layout\tabs-bg.jpg" />
+    <Content Include="Content\LigerUI\Silvery\images\layout\tabs-item-bg.jpg" />
+    <Content Include="Content\LigerUI\Silvery\images\layout\tabs-item-left-bg.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\layout\tabs-item-over-bg.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\layout\tabs-item-right-bg.gif" />
+    <Content Include="Content\LigerUI\Silvery\images\layout\tabs-tools.gif" />
+    <Content Include="Content\LigerUI\skins_1\Filezilla.png" />
+    <Content Include="Content\LigerUI\skins_1\Notepad.png" />
+    <Content Include="Content\LigerUI\skins_1\picassa.png" />
+    <Content Include="Content\LigerUI\skins_1\Recycle Empty.png" />
+    <Content Include="Content\LigerUI\skins_1\Recycle Full.png" />
+    <Content Include="Content\LigerUI\skins_1\SoulSeek.png" />
+    <Content Include="Content\LigerUI\skins_1\Steam.png" />
+    <Content Include="Content\LigerUI\skins_1\Task Manager.png" />
+    <Content Include="Content\login.css" />
+    <Content Include="Content\styles.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\_layout.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Areas\SystemManagement\Views\Web.config" />
+    <Content Include="Content\LigerUI\icons\新建 Microsoft Office Excel 工作表.xlsx" />
+    <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\layout.js" />
+    <Content Include="Scripts\LigerUI\ligerui.all.js" />
+    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
+    <Content Include="Views\Account\LogOn.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Organization\Index.cshtml" />
+    <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\SystemManagement\Controllers\" />
+    <Folder Include="Areas\SystemManagement\Models\" />
+    <Folder Include="Areas\SystemManagement\Views\Shared\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LED.DataProvider\LED.DataProvider.csproj">
+      <Project>{fd1042e4-f083-4b19-a0ab-27c3855a460f}</Project>
+      <Name>LED.DataProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LED.Domain\LED.Domain.csproj">
+      <Project>{607428b2-0c46-4063-b525-a4f8791512e6}</Project>
+      <Name>LED.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:35793/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

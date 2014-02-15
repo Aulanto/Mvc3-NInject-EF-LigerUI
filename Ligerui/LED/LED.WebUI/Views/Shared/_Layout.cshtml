@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/LigerUI/Aqua/css/ligerui-all.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/LigerUI/Gray/css/all.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/LigerUI/ligerui-icons.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/_layout.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/styles.css")" rel="stylesheet" type="text/css" />
+     <link href="@Url.Content("~/Content/ligerHook.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/LigerUI/ligerui.all.js")" type="text/javascript"></script>
+     <script src="@Url.Content("~/Scripts/layout.js")" type="text/javascript"></script>
+    @RenderSection("headerScripts", false)
+</head>
+<body>
+    @RenderBody()
+</body>
+@RenderSection("bottomScripts", false)
+</html>

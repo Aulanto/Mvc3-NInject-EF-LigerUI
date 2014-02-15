@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LED.WebUI", "LED.WebUI\LED.WebUI.csproj", "{99ED5A00-6974-46F6-84B9-2D8DA76CCB2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LED.Domain", "LED.Domain\LED.Domain.csproj", "{607428B2-0C46-4063-B525-A4F8791512E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LED.DataProvider", "LED.DataProvider\LED.DataProvider.csproj", "{FD1042E4-F083-4B19-A0AB-27C3855A460F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99ED5A00-6974-46F6-84B9-2D8DA76CCB2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99ED5A00-6974-46F6-84B9-2D8DA76CCB2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99ED5A00-6974-46F6-84B9-2D8DA76CCB2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99ED5A00-6974-46F6-84B9-2D8DA76CCB2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{607428B2-0C46-4063-B525-A4F8791512E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{607428B2-0C46-4063-B525-A4F8791512E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{607428B2-0C46-4063-B525-A4F8791512E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{607428B2-0C46-4063-B525-A4F8791512E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD1042E4-F083-4B19-A0AB-27C3855A460F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD1042E4-F083-4B19-A0AB-27C3855A460F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD1042E4-F083-4B19-A0AB-27C3855A460F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD1042E4-F083-4B19-A0AB-27C3855A460F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

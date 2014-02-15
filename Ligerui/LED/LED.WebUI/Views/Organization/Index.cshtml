@@ -1,0 +1,223 @@
+﻿@section headerScripts{
+    <style type="text/css">
+        #grid {
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+    </style>
+    <script type="text/javascript"> 
+        var UrlOrgDataSource = '@Url.Action("OrgDataSource")';
+        var UrlParentNode = '@Url.Action("ParentNode")';
+        var UrlAddOrg = '@Url.Action("AddOrg")';
+        var UrlModifyOrg = '@Url.Action("ModifyOrg")';
+        var UrlDeleteOrg = '@Url.Action("DeleteOrg")';
+      
+        $(function () {
+          
+               $("#grid").ligerGrid({
+                columns: [
+                { display: '组织结构名称', name: 'name', id:'tree1', align: 'left', width:'30%' },
+                { display: '组织结构编码', name: 'orgcode', align: 'left',width:'30%' }
+                ],
+                width: '98%',
+                pageSizeOptions: [10, 30, 50],
+                height: '97%',
+                url: UrlOrgDataSource,
+                alternatingRow: true,
+                rowHeight: 30,
+                headerRowHeight: 30,
+                tree: { columnId: 'tree1' },
+                toolbar: {
+                    items: [
+                   { text: '增加', click: AddOrg, img: '@Url.Content("~/Content/LigerUI/icons/add.gif")' },
+                   { line: true },
+                   { text: '修改', click: ModifyOrg, img:'@Url.Content("~/Content/LigerUI/icons/modify.gif")' },
+                   { line: true },
+                   { text: '删除', click: DeleteOrg, img: '@Url.Content("~/Content/LigerUI/icons/delete.gif")' }
+                    ]
+                }
+
+            }
+            );
+            function AddOrg() {
+                if (!window.addWin) {
+                    window.addWin = $.ligerDialog.open({
+                        target: $("#winAdd"),
+                        height: 250,
+                        width: 400,
+                        title: "增加组织机构"
+                    });
+                    $("#txtParentCode").ligerComboBox(
+                       {
+                           url: UrlParentNode,
+                           valueField: 'orgcode',
+                           textField: 'name',
+                           selectBoxWidth: 135,
+                           autocomplete: true,
+                           width: 135,
+                           hideOnLoseFocus: true,
+                           css: 'combo'
+                       }
+
+                   );
+
+                    $("#btnCancel").click(function () {
+                        window.addWin.hide();
+                    });
+
+                    $("#btnConfirm").click(function () {
+
+                        var parentNode = $("#txtParentCode").ligerComboBox().getValue();
+                        var orgName = $("#txtOrgName").val();
+                        var orgCode = $("#txtOrgCode").val();
+            
+
+                        if (orgName == "" || orgCode == "") {
+                            alert("组织机构名称和组织机构编码不能为空！");
+                            return;
+                        }
+
+                        $.post(UrlAddOrg,
+                            { parentNode: parentNode, orgName: orgName, orgCode: orgCode},
+                            function (data) {
+                                if (data.result) {
+                                    alert("操作成功！");
+                                    $("#grid").ligerGrid().reload();
+                                } else {
+                                    alert(data.msg);
+                                }
+                            });
+                    });
+                } else {
+                    window.addWin.show();
+                }
+            }
+            function ModifyOrg() {
+                var ModifyDialog;
+                var grid = $("#grid").ligerGrid();
+                var row = grid.getSelectedRow();
+                if (row == null) {
+                    alert("请选择一条数据");
+                    return;
+                }
+                $("#winModify").data("orgName", row.name);
+                $("#winModify").data("orgCode", row.orgcode);
+             
+
+                if (!window.modifyWin) {
+                    window.modifyWin = $.ligerDialog.open({
+                        target: $("#winModify"),
+                        height: 250,
+                        width: 400,
+                        title: "修改组织机构"
+                    });
+
+                    $("#txtModifyOrgName").val($("#winModify").data("orgName"));
+                    $("#txtModifyOrgCode").val($("#winModify").data("orgCode"));
+
+                    $("#btnModifyCancel").click(function () {
+                        window.modifyWin.hide();
+                    });
+
+                    $("#btnModifyConfirm").click(function () {
+
+                        var orgName = $("#txtModifyOrgName").val();
+                        var orgCode = $("#txtModifyOrgCode").val();
+                   
+                        if (orgName == "" || orgCode == "") {
+                            alert("组织机构名称和组织机构编码不能为空");
+                            return;
+                        }
+
+                        $.post(UrlModifyOrg, { orgName: orgName, orgCode: orgCode }, function (data) {
+                            if (data.result) {
+                                alert("操作成功！");
+                                $("#grid").ligerGrid().reload();
+                            } else {
+                                alert(data.msg);
+                            }
+                        });
+                    });
+                } else {
+                    $("#winModify").data("OrgName", row.name);
+                    $("#winModify").data("orgCode", row.orgcode);
+                    window.modifyWin.show();
+                }
+            }
+            function DeleteOrg() {
+                var grid = $("#grid").ligerGrid();
+                var row = grid.getSelectedRow();
+                if (row == null) {
+                    alert("请选择一条数据");
+                    return;
+                }
+                if (confirm("是否确定删除？")) {
+                    $.post(UrlDeleteOrg, { orgCode: row.orgcode }, function (data) {
+                        if (data.result) {
+                            alert("删除成功！");
+                            $("#grid").ligerGrid().reload();
+                        } else {
+                            alert(data.msg);
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+}
+
+<div id="grid"></div>
+
+<div id="winAdd" style="display: none;">
+    <table class="tb" style="height: 170px;">
+        <tr class="tr">
+            <td class="td">父级：</td>
+            <td style="padding-right:45px;">
+                <input id="txtParentCode" /></td>
+        </tr>
+        <tr class="tr">
+            <td class="td">组织机构名称：</td>
+            <td>
+                <input id="txtOrgName" type="text" /></td>
+        </tr>
+        <tr class="tr">
+            <td class="td">组织机构编码：
+            </td>
+            <td>
+                <input id="txtOrgCode" type="text" />
+            </td>
+
+        </tr>
+        <tr class="tr">
+            <td colspan="2">
+                <button id="btnConfirm" class="ui-button">确定</button>
+                <button id="btnCancel" class="ui-button">取消</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="winModify" style="display: none;">
+    <table class="tb" style="height: 170px;">
+        <tr class="tr">
+            <td class="td">组织机构名称：</td>
+            <td>
+                <input id="txtModifyOrgName" type="text" /></td>
+        </tr>
+        <tr class="tr">
+            <td class="td">组织机构编码:
+            </td>
+            <td>
+                <input id="txtModifyOrgCode" type="text" />
+            </td>
+
+        </tr>
+        <tr class="tr">
+            <td colspan="2">
+                <button id="btnModifyConfirm" class="ui-button">确定</button>
+                <button id="btnModifyCancel" class="ui-button">取消</button>
+            </td>
+        </tr>
+    </table>
+</div>
+

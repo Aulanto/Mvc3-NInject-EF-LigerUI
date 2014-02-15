@@ -1,0 +1,119 @@
+﻿* {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    height: 100%;
+    background: #4974A4;
+}
+
+body {
+    text-align: center;
+    background: #4974A4;
+    padding: 10px; 
+}
+
+#login {
+    width: 740px;
+    margin: 0 auto;
+    font-size: 12px;
+}
+
+#loginlogo {
+    width: 700px;
+    height: 100px;
+    overflow: hidden;
+    background: url('LigerUI/login/logo.jpg') no-repeat;
+    margin-top: 100px;
+}
+
+#loginpanel {
+    width: 729px;
+    position: relative;
+    height: 300px;
+}
+
+.panel-h {
+    width: 729px;
+    height: 20px;
+    background: url('LigerUI/login/panel-h.gif') no-repeat;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 3;
+}
+
+.panel-f {
+    width: 729px;
+    height: 13px;
+    background: url('LigerUI/login/panel-f.gif') no-repeat;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    z-index: 3;
+}
+
+.panel-c {
+    z-index: 2;
+    background: url('LigerUI/login/panel-c.gif') repeat-y;
+    width: 729px;
+    height: 300px;
+}
+
+.panel-c-l {
+    position: absolute;
+    left: 60px;
+    top: 40px;
+}
+
+.panel-c-r {
+    position: absolute;
+    right: 20px;
+    top: 50px;
+    width: 222px;
+    line-height: 200%;
+    text-align: left;
+}
+
+.panel-c-l h3 {
+    color: #556A85;
+    margin-bottom: 10px;
+}
+
+.panel-c-l td {
+    padding: 7px;
+}
+
+
+.login-text {
+    height: 24px;
+    left: 24px;
+    border: 1px solid #e9e9e9;
+    background: #f9f9f9;
+}
+
+.login-text-focus {
+    border: 1px solid #E6BF73;
+}
+
+.login-btn {
+    width: 114px;
+    height: 29px;
+    color: #E9FFFF;
+    line-height: 29px;
+    background: url('LigerUI/login/login-btn.gif') no-repeat;
+    border: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+#txtUsername, #txtPassword {
+    width: 191px;
+}
+
+#logincopyright {
+    text-align: center;
+    color: White;
+    margin-top: 80px;
+}

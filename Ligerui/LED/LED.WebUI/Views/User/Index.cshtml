@@ -1,0 +1,350 @@
+﻿@section headerScripts{
+    <style type="text/css">
+        #layout {
+            width: 99.2%;
+            margin: 0 auto;
+            margin-top: 4px;
+        }
+
+        #tree {
+            width: 200px;
+            height: 300px;
+            margin: 10px;
+            float: left;
+            overflow: auto;
+        }
+    </style>
+    <script type="text/javascript">
+
+        $(function () {
+
+            var UrlTreeDataSource = '@Url.Action("TreeDataSource")';
+            var UrlUserDataSource = '@Url.Action("UserDataSource")';
+            var UrlAddUser = '@Url.Action("AddUser")';
+            var UrlModifyUser = '@Url.Action("ModifyUser")';
+            var UrlDeleteUser = '@Url.Action("DeleteUser")';
+            var UrlAddRole = '@Url.Action("AddRole")';
+            var UrlGetRole = '@Url.Action("GetRole")';
+
+            var grid;
+            var tree;
+
+            $("#layout").ligerLayout({
+                leftWidth: 190,
+                height: '100%',
+                heightDiff: -14,
+                space: 4
+            });
+
+            tree = $("#tree").ligerTree({
+                url: UrlTreeDataSource,
+                nodeWidth: 40,
+                checkbox: false,
+                parentIcon: null,
+                childIcon: null,
+                idFieldName: 'orgCode',
+                textFieldName: 'name',
+                parentIDFieldName: 'parentCode',
+                onSelect: LoadUser
+
+            });
+
+            grid = $("#grid").ligerGrid({
+                columns: [
+                { display: '用户账号', name: 'userid', align: 'center', width: '30%' },
+                { display: '姓名', name: 'name', type: 'int', align: 'center', width: '30%' },
+                { display: '角色名称', name: 'rolename', type: 'int', align: 'center', width: '30%' },
+                ],
+                width: '98%',
+                pageSizeOptions: [10, 30, 50],
+                height: '90%',
+                rowHeight: 30,
+                headerRowHeight: 30,
+                url: UrlUserDataSource,
+                alternatingRow: true,
+                parms: { orgCode: "01" },
+                toolbar: {
+                    items: [
+                   { text: '增加', click: AddUser, img: '@Url.Content("~/Content/LigerUI/icons/add.gif")' },
+                   { line: true },
+                   { text: '修改', click: ModifyUser, img: '@Url.Content("~/Content/LigerUI/icons/modify.gif")' },
+                   { line: true },
+                   { text: '删除', click: DeleteUser, img: '@Url.Content("~/Content/LigerUI/icons/delete.gif")' },
+                   { line: true },
+                   { text: '角色分配', click: RoleAllocation, img: '@Url.Content("~/Content/LigerUI/icons/role.gif")' }
+                    ]
+                }
+
+            }
+           );
+
+            function LoadUser() {
+                grid.loadServerData({ orgCode: tree.getSelected().data.orgCode });
+            }
+
+            function AddUser() {
+                var node = tree.getSelected();
+                if (node == null) {
+                    alert("请选择组织机构！");
+                    return;
+                }
+
+                $("#winAdd").data("orgCode", tree.getSelected().data.orgCode);
+
+                if (!window.addWin) {
+                    window.addWin = $.ligerDialog.open({
+                        target: $("#winAdd"),
+                        height: 260,
+                        width: 400,
+                        title: "增加用户",
+                        isHidden: false
+                    });
+
+                    $("#btnCancel").click(function () {
+                        window.addWin.hide();
+                    });
+
+                    $("#btnConfirm").click(function () {
+
+                        var orgCode = $("#winAdd").data("orgCode");
+                        var userId = $("#txtUserId").val();
+                        var userName = $("#txtUserName").val();
+                        var password = $("#txtPassword").val();
+
+                        if (userId == "" || userName == "" || password == "") {
+                            alert("用户账号，名称，密码都不能为空！");
+                            return;
+                        }
+
+                        $.post(UrlAddUser,
+                            { orgCode: orgCode, userId: userId, userName: userName, password: password },
+                            function (data) {
+                                if (data.result) {
+                                    alert("操作成功！");
+                                    $("#grid").ligerGrid().reload();
+                                } else {
+                                    alert(data.msg);
+                                }
+                            });
+                    });
+                } else {
+                    window.addWin.show();
+                }
+            }
+            function ModifyUser() {
+                var ModifyDialog;
+                var grid = $("#grid").ligerGrid();
+                var row = grid.getSelectedRow();
+                if (row == null) {
+                    alert("请选择用户");
+                    return;
+                }
+
+                $("#winModify").data("userId", row.userid);
+                $("#winModify").data("name", row.name);
+                $("#txtModifyUserId").attr("readonly", true);
+
+                if (!window.modifyWin) {
+                    window.modifyWin = $.ligerDialog.open({
+                        target: $("#winModify"),
+                        height: 250,
+                        width: 400,
+                        title: "修改用户"
+                    });
+
+                    $("#txtModifyUserId").val($("#winModify").data("userId"));
+                    $("#txtModifyUserName").val($("#winModify").data("name"));
+
+                    $("#btnModifyCancel").click(function () {
+                        window.modifyWin.hide();
+                    });
+
+                    $("#btnModifyConfirm").click(function () {
+
+                        var userId = $("#txtModifyUserId").val();
+                        var userName = $("#txtModifyUserName").val();
+                        var password = $("#txtModifyPassword").val();
+
+                        if (userName == "" || password == "") {
+                            alert("用户名和密码不能为空！");
+                            return;
+                        }
+
+                        $.post(UrlModifyUser, { userId: userId, userName: userName, password: password }, function (data) {
+                            if (data.result) {
+                                alert("操作成功！");
+                                $("#grid").ligerGrid().reload();
+                            } else {
+                                alert(data.msg);
+                            }
+                        });
+                    });
+                } else {
+                    $("#winModify").data("userId", row.userid);
+                    $("#winModify").data("name", row.name);
+                    window.modifyWin.show();
+                }
+            }
+            function DeleteUser() {
+                var grid = $("#grid").ligerGrid();
+                var row = grid.getSelectedRow();
+                if (row == null) {
+                    alert("请选择用户");
+                    return;
+                }
+                if (confirm("是否确定删除？")) {
+                    $.post(UrlDeleteUser, { userId: row.userid }, function (data) {
+                        if (data.result) {
+                            alert("删除成功！");
+                            $("#grid").ligerGrid().reload();
+                        } else {
+                            alert(data.msg);
+                        }
+                    });
+                }
+            }
+
+            function RoleAllocation() {
+                var grid = $("#grid").ligerGrid();
+                var row = grid.getSelectedRow();
+                if (row == null) {
+                    alert("请选择用户");
+                    return;
+                }
+                $("#winAllocation").data("userName", row.name);
+                $("#winAllocation").data("userId", row.userid);
+                
+                if (!window.dialog) {
+                    window.dialog = $.ligerDialog.open({
+                        target: $("#winAllocation"),
+                        height: 200,
+                        width: 400,
+                        title: "分配角色",
+                        isHidden: false
+                    });
+
+                    $("#txtRole").ligerComboBox(
+                      {
+                          url: UrlGetRole,
+                          valueField: 'roleid',
+                          textField: 'rolename',
+                          selectBoxWidth: 135,
+                          autocomplete: true,
+                          width: 135,
+                          hideOnLoseFocus:true,
+                          css: 'combo'
+                      }
+
+                  );
+                    $("#btnRoleCancel").click(function () {
+                        window.dialog.hide();
+                    });
+
+                    $("#btnRoleConfirm").click(function () {
+                        var userId = $("#winAllocation").data("userId");
+                        var userName = $("#winAllocation").data("userName");
+                        var roleName = $("#txtRole").ligerComboBox().getText();
+                      
+                        if (roleName == "") {
+                            alert("角色不能为空！");
+                            return;
+                        }
+
+                        $.post(UrlAddRole,
+                            {userId:userId, userName: userName, roleName: roleName },
+                            function (data) {
+                                if (data.result) {
+                                    alert("操作成功！");
+                                    $("#grid").ligerGrid().reload();
+                                } else {
+                                    alert(data.msg);
+                                }
+                            });
+                    });
+                } else {
+                    window.dialog.show();
+                }
+            }
+        })
+    </script>
+}
+
+<div id="layout">
+    <div position="left" title="组织机构">
+        <ul id="tree">
+        </ul>
+    </div>
+    <div position="center" title="用户操作列表">
+        <div id="grid"></div>
+    </div>
+</div>
+
+<div id="winAdd" style="display: none;">
+    <table class="tb" style="height: 170px;">
+        <tr class="tr">
+            <td class="td">用户账户：</td>
+            <td>
+                <input id="txtUserId" /></td>
+        </tr>
+        <tr class="tr">
+            <td class="td">用户名称：</td>
+            <td>
+                <input id="txtUserName" /></td>
+        </tr>
+        <tr class="tr">
+            <td class="td">用户密码：</td>
+            <td>
+                <input id="txtPassword" type="text" /></td>
+        </tr>
+        <tr class="tr">
+            <td colspan="2">
+                <button id="btnConfirm" class="ui-button">确定</button>
+                <button id="btnCancel" class="ui-button">取消</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="winModify" style="display: none;">
+    <table class="tb" style="height: 170px;">
+        <tr class="tr">
+            <td class="td">用户账户：</td>
+            <td>
+                <input id="txtModifyUserId" /></td>
+        </tr>
+        <tr class="tr">
+            <td class="td">用户名称：</td>
+            <td>
+                <input id="txtModifyUserName" /></td>
+        </tr>
+        <tr class="tr">
+            <td class="td">用户密码：</td>
+            <td>
+                <input id="txtModifyPassword" type="text" /></td>
+        </tr>
+        <tr class="tr">
+            <td colspan="2">
+                <button id="btnModifyConfirm" class="ui-button">确定</button>
+                <button id="btnModifyCancel" class="ui-button">取消</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="winAllocation" style="display: none;">
+    <table class="tb" style="height: 100px;">
+        <tr class="tr">
+            <td class="td" style=" width:150px;">角色：</td>
+            <td>
+                <input id="txtRole" /></td>
+        </tr>
+        <tr class="tr">
+            <td colspan="2">
+                <button id="btnRoleConfirm" class="ui-button">确定</button>
+                <button id="btnRoleCancel" class="ui-button">取消</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+

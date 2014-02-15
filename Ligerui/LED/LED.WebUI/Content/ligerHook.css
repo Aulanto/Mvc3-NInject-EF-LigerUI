@@ -1,0 +1,19 @@
+﻿.tb {
+    border: 1px solid #ccc;
+    width: 98%;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.tr {
+    line-height: 30px;
+    border: 1px solid #ccc;
+}
+
+.td {
+    border-right: 1px solid #ccc;
+}
+
+.combo {
+    margin-left:60px;
+}
